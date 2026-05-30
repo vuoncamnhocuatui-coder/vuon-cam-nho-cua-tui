@@ -3,139 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vườn cam nhỏ của tui 🍊</title>
+    <title>Vườn Cam Nhỏ Của Tui 🍊</title>
     <style>
         :root {
             --primary-orange: #FF8C00;
-            --light-orange: #FFF5E6;
-            --border-orange: #FFAD60;
-            --text-color: #5D4037;
+            --soft-orange: #FFF5E6;
+            --dark-orange: #E67E22;
+            --text-brown: #5D4037;
         }
+
         body {
-            background-color: var(--light-orange);
-            font-family: 'Segoe UI', Arial, sans-serif;
-            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--soft-orange);
+            color: var(--text-brown);
             margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            padding: 0;
         }
-        /* Màn hình khóa */
+
+        /* --- Màn hình khóa --- */
         #lock-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--primary-orange);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: 0.5s;
+        }
+        .login-box { background: white; padding: 30px; border-radius: 20px; text-align: center; }
+        input { padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 10px; }
+        button { padding: 10px 20px; background: var(--primary-orange); color: white; border: none; border-radius: 8px; cursor: pointer; }
+
+        /* --- Thanh Menu --- */
+        nav {
+            background: white;
+            padding: 15px 20px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            z-index: 9999;
-            transition: 0.5s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 100;
         }
-        .login-box {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        .logo { font-weight: bold; color: var(--primary-orange); font-size: 1.2rem; cursor: pointer; }
+        .menu-container { position: relative; }
+        .menu-btn { cursor: pointer; font-weight: 500; }
+        .dropdown {
+            position: absolute; right: 0; top: 30px;
+            background: white; border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none; width: 200px; overflow: hidden;
         }
-        input[type="password"] {
-            padding: 10px;
-            width: 200px;
-            border: 2px solid var(--border-orange);
-            border-radius: 10px;
-            outline: none;
+        .dropdown div { padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .dropdown div:hover { background: var(--soft-orange); color: var(--primary-orange); }
+
+        /* --- Nội dung chính --- */
+        .container { max-width: 800px; margin: 30px auto; padding: 20px; }
+        
+        /* Trang bìa truyện */
+        .story-header { display: flex; gap: 20px; background: white; padding: 20px; border-radius: 20px; border: 2px solid var(--primary-orange); }
+        .cover-img { width: 150px; height: 220px; background: #ddd; border-radius: 10px; object-fit: cover; }
+        .intro { flex: 1; }
+        
+        /* Mục lục */
+        .chapter-list { margin-top: 30px; background: white; padding: 20px; border-radius: 20px; }
+        .chapter-item { 
+            padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; 
+            display: flex; justify-content: space-between;
         }
-        button {
-            padding: 10px 20px;
-            background: var(--primary-orange);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        /* Giao diện chính */
-        header {
-            background-color: var(--primary-orange);
-            width: 100%;
-            padding: 30px 0;
-            text-align: center;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .container {
-            max-width: 700px;
-            width: 90%;
-            margin: 30px auto;
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            border: 2px solid var(--border-orange);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        .story-card {
-            border-bottom: 1px solid #FFE0B2;
-            padding: 15px 0;
-        }
-        .story-card h3 {
-            color: var(--primary-orange);
-            margin-bottom: 5px;
-        }
-        .content {
-            line-height: 1.6;
-            white-space: pre-line; /* Giữ các dấu xuống dòng của truyện */
-        }
+        .chapter-item:hover { color: var(--primary-orange); }
+
+        /* Nội dung đọc */
+        .reading-mode { background: white; padding: 30px; border-radius: 20px; line-height: 1.8; font-size: 1.1rem; }
+        .back-btn { margin-bottom: 20px; display: inline-block; cursor: pointer; color: var(--primary-orange); }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
     <div id="lock-screen">
         <div class="login-box">
-            <h2 style="color: var(--primary-orange)">🍊 Vườn Cam Nhỏ</h2>
-            <p>Nhập mật khẩu để vào vườn</p>
-            <input type="password" id="passInput" placeholder="Mật khẩu là gì nè?">
-            <br><br>
-            <button onclick="checkPass()">Vào Đọc Truyện</button>
+            <h2>🍊 Vườn Cam Cần Chìa Khóa</h2>
+            <input type="password" id="passInput" placeholder="Mật khẩu...">
+            <br>
+            <button onclick="checkPass()">Mở Vườn</button>
         </div>
     </div>
 
-    <header>
-        <h1>Vườn cam nhỏ của tui 🍊</h1>
-        <p>Góc nhỏ của riêng hai đứa mình</p>
-    </header>
-
-    <div class="container">
-        <!-- TRUYỆN 1 -->
-        <div class="story-card">
-            <h3>1. Tên câu chuyện đầu tiên</h3>
-            <div class="content">
-                Ngày xửa ngày xưa, ở một ngôi làng nọ... 
-                (Bạn có thể viết nội dung truyện vào đây)
+    <nav>
+        <div class="logo" onclick="showHome()">Vườn Cam Nhỏ 🍊</div>
+        <div class="menu-container">
+            <div class="menu-btn" onclick="toggleDropdown()">Tất cả truyện ▼</div>
+            <div id="myDropdown" class="dropdown">
+                <!-- Danh sách truyện sẽ tự động hiện ở đây -->
             </div>
         </div>
+    </nav>
 
-        <!-- TRUYỆN 2 -->
-        <div class="story-card">
-            <h3>2. Tên câu chuyện thứ hai</h3>
-            <div class="content">
-                Mùa thu năm ấy, trời bắt đầu chuyển sang màu cam...
-                (Viết tiếp nội dung vào đây nhé)
-            </div>
-        </div>
-        
-        <p style="text-align:center; color: #999; font-size: 13px;">Hết rồi, đợi tụi mình viết tiếp nhé!</p>
+    <div class="container" id="main-content">
+        <!-- Nội dung sẽ thay đổi bằng JavaScript -->
     </div>
 
     <script>
-        function checkPass() {
-            var mk = document.getElementById("passInput").value;
-            // BẠN ĐỔI MẬT KHẨU Ở DÒNG DƯỚI (Thay chữ 'camngot')
-            if (mk === "camngot") {
-                document.getElementById("lock-screen").style.top = "-100%";
-            } else {
-                alert("Hic, sai mật khẩu rồi!");
+        // --- 1. DỮ LIỆU TRUYỆN (BẠN SẼ THÊM TRUYỆN Ở ĐÂY) ---
+        const stories = [
+            {
+                id: 0,
+                title: "Mùa Cam Chín Năm Ấy",
+                cover: "https://via.placeholder.com/150x220?text=Mau+Cam", // Thay link ảnh bìa
+                desc: "Đây là một câu chuyện ngọt ngào về hai người trong một vườn cam nhỏ...",
+                chapters: [
+                    { title: "Chương 1: Gặp gỡ", content: "Nội dung chương 1 ở đây...\nBạn có thể xuống dòng thoải mái." },
+                    { title: "Chương 2: Làm quen", content: "Nội dung chương 2 ở đây..." }
+                ]
+            },
+            {
+                id: 1,
+                title: "Chuyện Con Mèo Màu Cam",
+                cover: "https://via.placeholder.com/150x220?text=Meo+Cam",
+                desc: "Kể về một chú mèo thích ăn cam và người bạn của nó.",
+                chapters: [
+                    { title: "Chương 1: Tiếng kêu Meo", content: "Ngày xửa ngày xưa có một con mèo..." }
+                ]
             }
+        ];
+
+        // --- 2. HÀM ĐIỀU KHIỂN ---
+        function checkPass() {
+            if (document.getElementById("passInput").value === "camngot") {
+                document.getElementById("lock-screen").style.display = "none";
+                showHome();
+                renderMenu();
+            } else { alert("Sai mật khẩu!"); }
+        }
+
+        function toggleDropdown() {
+            const d = document.getElementById("myDropdown");
+            d.style.display = (d.style.display === "block") ? "none" : "block";
+        }
+
+        function renderMenu() {
+            const menu = document.getElementById("myDropdown");
+            menu.innerHTML = stories.map(s => `<div onclick="showStory(${s.id})">${s.title}</div>`).join('');
+        }
+
+        function showHome() {
+            let html = `<h1>Chào mừng bạn đến với Vườn Cam 🍊</h1><p>Chọn một bộ truyện trong menu để bắt đầu đọc nhé!</p>`;
+            html += `<div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">`;
+            stories.forEach(s => {
+                html += `
+                    <div onclick="showStory(${s.id})" style="background:white; padding:15px; border-radius:15px; cursor:pointer; border:1px solid #ddd">
+                        <img src="${s.cover}" style="width:100%; border-radius:10px;">
+                        <h3 style="margin:10px 0">${s.title}</h3>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            document.getElementById("main-content").innerHTML = html;
+            document.getElementById("myDropdown").style.display = "none";
+        }
+
+        function showStory(id) {
+            const s = stories[id];
+            let html = `
+                <div class="back-btn" onclick="showHome()">← Quay lại trang chủ</div>
+                <div class="story-header">
+                    <img src="${s.cover}" class="cover-img">
+                    <div class="intro">
+                        <h2>${s.title}</h2>
+                        <p>${s.desc}</p>
+                    </div>
+                </div>
+                <div class="chapter-list">
+                    <h3>Mục lục</h3>
+                    ${s.chapters.map((c, index) => `
+                        <div class="chapter-item" onclick="showRead(${id}, ${index})">
+                            <span>${c.title}</span>
+                            <span>▶</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.getElementById("main-content").innerHTML = html;
+            document.getElementById("myDropdown").style.display = "none";
+        }
+
+        function showRead(sId, cId) {
+            const c = stories[sId].chapters[cId];
+            let html = `
+                <div class="back-btn" onclick="showStory(${sId})">← Quay lại mục lục</div>
+                <div class="reading-mode">
+                    <h2>${c.title}</h2>
+                    <div style="white-space: pre-line;">${c.content}</div>
+                </div>
+            `;
+            document.getElementById("main-content").innerHTML = html;
         }
     </script>
 </body>
