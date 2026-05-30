@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vườn cam nhỏ của tui 🍊</title>
+    <style>
+        :root {
+            --primary-orange: #FF8C00;
+            --light-orange: #FFF5E6;
+            --border-orange: #FFAD60;
+            --text-color: #5D4037;
+        }
+        body {
+            background-color: var(--light-orange);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        /* Màn hình khóa */
+        #lock-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--primary-orange);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: 0.5s;
+        }
+        .login-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        input[type="password"] {
+            padding: 10px;
+            width: 200px;
+            border: 2px solid var(--border-orange);
+            border-radius: 10px;
+            outline: none;
+        }
+        button {
+            padding: 10px 20px;
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        /* Giao diện chính */
+        header {
+            background-color: var(--primary-orange);
+            width: 100%;
+            padding: 30px 0;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .container {
+            max-width: 700px;
+            width: 90%;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid var(--border-orange);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .story-card {
+            border-bottom: 1px solid #FFE0B2;
+            padding: 15px 0;
+        }
+        .story-card h3 {
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+        .content {
+            line-height: 1.6;
+            white-space: pre-line; /* Giữ các dấu xuống dòng của truyện */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen">
+        <div class="login-box">
+            <h2 style="color: var(--primary-orange)">🍊 Vườn Cam Nhỏ</h2>
+            <p>Nhập mật khẩu để vào vườn</p>
+            <input type="password" id="passInput" placeholder="Mật khẩu là gì nè?">
+            <br><br>
+            <button onclick="checkPass()">Vào Đọc Truyện</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>Vườn cam nhỏ của tui 🍊</h1>
+        <p>Góc nhỏ của riêng hai đứa mình</p>
+    </header>
+
+    <div class="container">
+        <!-- TRUYỆN 1 -->
+        <div class="story-card">
+            <h3>1. Tên câu chuyện đầu tiên</h3>
+            <div class="content">
+                Ngày xửa ngày xưa, ở một ngôi làng nọ... 
+                (Bạn có thể viết nội dung truyện vào đây)
+            </div>
+        </div>
+
+        <!-- TRUYỆN 2 -->
+        <div class="story-card">
+            <h3>2. Tên câu chuyện thứ hai</h3>
+            <div class="content">
+                Mùa thu năm ấy, trời bắt đầu chuyển sang màu cam...
+                (Viết tiếp nội dung vào đây nhé)
+            </div>
+        </div>
+        
+        <p style="text-align:center; color: #999; font-size: 13px;">Hết rồi, đợi tụi mình viết tiếp nhé!</p>
+    </div>
+
+    <script>
+        function checkPass() {
+            var mk = document.getElementById("passInput").value;
+            // BẠN ĐỔI MẬT KHẨU Ở DÒNG DƯỚI (Thay chữ 'camngot')
+            if (mk === "camngot") {
+                document.getElementById("lock-screen").style.top = "-100%";
+            } else {
+                alert("Hic, sai mật khẩu rồi!");
+            }
+        }
+    </script>
+</body>
+</html>
