@@ -3,7 +3,9 @@
                 id: 0,
                 title: "Tôi lại đánh sập câu chuyện kinh dị trong trường rồi",
                 cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqVbMjCscxDBhbv04ZIyuwDFsiKCgvgbyPdw&s", // Thay link ảnh bìa
-                desc: "Tác giả: Du Ngư\nThể loại: vô hạn lưu, kinh dị, trinh thám\nGiới thiệu: Lâm Dị thi trượt kỳ thi tuyển sinh lựa chọn một ngôi trường rởm để theo học. Trường đại học rởm không hổ danh là trường đại học rởm, dòng đầu tiên của giấy báo nhập học... ",
+                desc: `Tác giả: Du Ngư
+                Thể loại: vô hạn lưu, kinh dị, trinh thám
+                Giới thiệu: Lâm Dị thi trượt kỳ thi tuyển sinh lựa chọn một ngôi trường rởm để theo học. Trường đại học rởm không hổ danh là trường đại học rởm, dòng đầu tiên của giấy báo nhập học... `,
                 chapters: [
                     { title: "Chương 1", content: `“Lâm Dị, em có đang nghe không?”
 Giọng nói lo lắng của giáo viên chủ nhiệm phát ra từ điện thoại: “Alo… Alo? Lâm Dị?”
