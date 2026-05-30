@@ -74,6 +74,24 @@
         .back-btn { margin-bottom: 20px; display: inline-block; cursor: pointer; color: var(--primary-orange); }
 
         .hidden { display: none; }
+        /* --- Nút chuyển chương --- */
+        .nav-chapters {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--border-orange);
+        }
+        .nav-btn {
+            padding: 10px 20px;
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .nav-btn:hover { background: var(--dark-orange); }
     </style>
 </head>
 <body>
@@ -302,15 +320,25 @@ Dao làm bếp, dao gọt trái cây, dao găm, các loại dao…
         }
 
         function showRead(sId, cId) {
-            const c = stories[sId].chapters[cId];
+            const story = stories[sId];
+            const c = story.chapters[cId];
+            const hasPrev = cId > 0;
+            const hasNext = cId < story.chapters.length - 1;
+
             let html = `
                 <div class="back-btn" onclick="showStory(${sId})">← Quay lại mục lục</div>
                 <div class="reading-mode">
-                    <h2>${c.title}</h2>
+                    <h2 style="color: var(--primary-orange); text-align: center;">${c.title}</h2>
                     <div style="white-space: pre-line;">${c.content}</div>
+                    
+                    <div class="nav-chapters">
+                        ${hasPrev ? `<div class="nav-btn" onclick="showRead(${sId}, ${cId - 1})">← Chương trước</div>` : '<div></div>'}
+                        ${hasNext ? `<div class="nav-btn" onclick="showRead(${sId}, ${cId + 1})">Chương sau →</div>` : '<div></div>'}
+                    </div>
                 </div>
             `;
             document.getElementById("main-content").innerHTML = html;
+            window.scrollTo(0, 0);
         }
     </script>
 </body>
